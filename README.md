@@ -1,6 +1,6 @@
 # Invoice Telegram Bot
 
-The **Invoice Telegram Bot** is a Python-based application that allows users to upload PDF invoices via Telegram, categorize them by invoice type (Proforma, Sales, Overdue, Retainer), extract text using `pdfplumber`, process the text with the Gemini API to generate structured JSON, and store the data in a database. The bot is built with FastAPI for backend APIs, SQLAlchemy for database operations, and `python-telegram-bot` for Telegram integration. A simple frontend is included for potential UI interactions.
+The **Invoice Telegram Bot** is a Python-based application that allows users to upload PDF invoices via Telegram, categorize them by invoice type (Proforma, Sales, Overdue, Retainer), extract text using `pdfplumber`, process the text with the Gemini API to generate structured JSON, and store the data in a SQLite database. The bot is built with FastAPI for backend APIs, SQLAlchemy for SQLite database operations, and `python-telegram-bot` for Telegram integration. A simple frontend is included for potential UI interactions.
 
 This project is designed to streamline invoice processing for small businesses or developers needing automated PDF parsing and data storage.
 
@@ -88,8 +88,8 @@ invoice_telegram/
 ### Steps
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-repo/invoice_telegram.git
-   cd invoice_telegram
+   git clone https://github.com/Vaibhav-crux/invoice-telegram-bot.git
+   cd invoice-telegram-bot
    ```
 
 2. **Create a Virtual Environment**:
@@ -101,17 +101,6 @@ invoice_telegram/
 3. **Install Dependencies**:
    ```bash
    pip install -r requirements.txt
-   ```
-   Ensure `requirements.txt` includes:
-   ```
-   fastapi>=0.115.0
-   uvicorn>=0.30.0
-   python-telegram-bot>=20.0
-   pdfplumber>=0.11.0
-   sqlalchemy>=2.0
-   google-generativeai>=0.7.0
-   aiofiles>=23.1.0
-   python-dotenv>=1.0.0
    ```
 
 4. **Set Up Environment Variables**:
@@ -129,7 +118,7 @@ invoice_telegram/
      ```
 
 5. **Initialize the Database**:
-   - The database (`invoices.db`) is automatically created on startup if it doesn't exist.
+   - The SQLite database (`invoices.db`) is automatically created on startup if it doesn't exist.
    - Tables (`invoice_pdfs`, `invoice_jsons`) are initialized via `app/core/db_config.py`.
 
 ## Running the Project
@@ -192,7 +181,7 @@ invoice_telegram/
    - Verify the inline keyboard displays four options in two rows.
    - Select an option (e.g., Sales Invoice) and upload a PDF.
    - Check for the "Processing..." message.
-   - Verify the database entries in `invoice_pdfs` and `invoice_jsons`.
+   - Verify the SQLite database entries in `invoice_pdfs` and `invoice_jsons`.
    - Confirm the PDF is deleted from `files/temp_pdf`.
    - Check for the Telegram message: `Record Saved into Sales Invoice table`.
 
@@ -206,10 +195,10 @@ invoice_telegram/
    - Example log entries:
      - "PDF saved to {path}"
      - "PDF text extracted for {path}"
-     - "Saved invoice data to database for {filename}"
+     - "Saved invoice data to SQLite database for {filename}"
      - "File deleted: {path}"
      - "Raw Gemini response for {filename}: {json}"
-     - "Saved Gemini JSON to database for invoice_type: {type}"
+     - "Saved Gemini JSON to SQLite database for invoice_type: {type}"
 
 5. **Test Frontend**:
    - Open `frontend/index.html` and verify connectivity to FastAPI endpoints (if implemented).
